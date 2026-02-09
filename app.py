@@ -10,7 +10,6 @@ app = Flask(__name__)
 data = []
 
 def load_data():
-    #slightly weird syntax for reading from a file, but apparently the proper Pythonic way:
     with open('Pokemon.csv', newline='') as f:
         reader = csv.reader(f)
         for row in reader:
@@ -23,23 +22,18 @@ def index():
     :return: The index page
     '''
     return 'Hello, World!'
-
-@app.route('/<row>/<column>', strict_slashes=False)
-def get_cell(row, column):
+    
+@app.route('/name/<poke_name>/')
+def get_pokemon(poke_name):
     '''
-    Renders the cell page
-    :param row: The row of the cell
-    :param column: The column of the cell
-    :return: The cell page
+    Renders the Pokemon page
+    :param poke_name: The Pokemon to display
+    :return: The Pokemon's page
     '''
-    try:
-        row = int(row)
-        column = int(column)
-        return data[row][column]
-    except IndexError:
-        return 'Index out of range'
-    except ValueError:
-        return 'Invalid index'
+    for pokemon in data:
+        if poke_name==pokemon[1]:
+            return pokemon
+    return "Pokemon not found, try Bulbasaur instead!"
 
 if __name__ == '__main__':
     load_data()
