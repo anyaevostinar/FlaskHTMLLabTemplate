@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import csv
 
 '''
@@ -11,7 +11,7 @@ data = []
 
 def load_data():
     #slightly weird syntax for reading from a file, but apparently the proper Pythonic way:
-    with open('dataset.csv', newline='') as f:
+    with open('Pokemon.csv', newline='') as f:
         reader = csv.reader(f)
         for row in reader:
             data.append(row)
@@ -43,4 +43,4 @@ def get_cell(row, column):
 
 if __name__ == '__main__':
     load_data()
-    app.run()
+    app.run(port=5100)
